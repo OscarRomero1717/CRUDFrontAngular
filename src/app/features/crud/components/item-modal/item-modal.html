@@ -1,0 +1,119 @@
+<nz-modal
+  [(nzVisible)]="visible"
+  nzTitle="{{ isEditMode ? 'Editar Item' : 'Nuevo Item' }}"
+  (nzOnCancel)="onCancel()"
+  (nzOnOk)="onOk()"
+  nzOkType="primary"
+  nzOkText="Aceptar"
+  nzCancelText="Cancelar"
+>
+  <div *nzModalContent>
+    <form nz-form [formGroup]="form">
+      
+      <nz-form-item *ngIf="false">
+        <nz-form-label [nzSpan]="6" nzFor="id">id</nz-form-label>
+        <nz-form-control [nzSpan]="14"  >
+          <input
+            type="number"
+            nz-input
+            formControlName="id"
+            id="id"
+            step="1"
+            min="1"
+          />
+        </nz-form-control>
+      </nz-form-item>
+
+      
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzFor="codigo">Código producto</nz-form-label>
+        <nz-form-control [nzSpan]="14" nzErrorTip="Código requerido (entero)">
+          <input
+            type="number"
+            nz-input
+            formControlName="codigo"
+            id="codigo"
+            step="1"
+            min="1"
+          />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzFor="nombre">Nombre</nz-form-label>
+        <nz-form-control [nzSpan]="14" nzErrorTip="Nombre es requerido (máx. 250)">
+          <input nz-input formControlName="nombre" id="nombre" maxlength="250" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzFor="descripcion">Descripción</nz-form-label>
+        <nz-form-control [nzSpan]="14" nzErrorTip="Descripción es requerida (máx. 250)">
+          <textarea
+            nz-input
+            formControlName="descripcion"
+            id="descripcion"
+            maxlength="250"
+          ></textarea>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzFor="refInterna">Referencia interna</nz-form-label>
+        <nz-form-control [nzSpan]="14" nzErrorTip="Referencia es requerida (máx. 100)">
+          <input nz-input formControlName="refInterna" id="refInterna" maxlength="100" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzFor="precioUnitario">Precio unitario</nz-form-label>
+        <nz-form-control [nzSpan]="14" nzErrorTip="Debe ser un número positivo">
+          <input
+            type="number"
+            step="0.01"
+            min="0.01"
+            nz-input
+            formControlName="precioUnitario"
+            id="precioUnitario"
+          />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzFor="estado">Estado</nz-form-label>
+        <nz-form-control [nzSpan]="14" nzErrorTip="Estado requerido">
+          <nz-select formControlName="estado" id="estado" nzPlaceHolder="Seleccione estado">
+            <nz-option nzValue="Activo" nzLabel="Activo"></nz-option>
+            <nz-option nzValue="Inactivo" nzLabel="Inactivo"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzFor="unidadMedida">Unidad de medida</nz-form-label>
+        <nz-form-control [nzSpan]="14" nzErrorTip="Unidad requerida (máx. 50)">
+          <input nz-input formControlName="unidadMedida" id="unidadMedida" maxlength="50" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzFor="fechaCreacion">Fecha creación</nz-form-label>
+        <nz-form-control [nzSpan]="14" nzErrorTip="Fecha requerida">
+          <nz-date-picker
+            formControlName="fechaCreacion"
+            id="fechaCreacion"
+            [nzDisabledDate]="disabledDate"
+            nzFormat="dd/MM/yyyy"
+            nzPlaceHolder="Selecciona una fecha"
+          ></nz-date-picker>
+        </nz-form-control>
+      </nz-form-item>
+      <!-- Botón de limpiar -->
+      <div style="margin-top: 16px; text-align: right;">
+        <button nz-button nzType="default" nzDanger type="button" (click)="resetForm()">
+          Limpiar campos
+        </button>
+      </div>
+    </form>
+  </div>
+</nz-modal>

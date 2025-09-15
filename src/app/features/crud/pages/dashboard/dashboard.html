@@ -1,0 +1,63 @@
+<div class="table-container" style="padding: 24px;">
+  
+  <div style="margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
+    <h2>Listado de Items</h2>
+    <!-- Contenedor de botones alineados a la izquierda del bloque derecho -->
+    <div style="display: flex; gap: 8px;">
+      <button nz-button nzType="primary" (click)="openModal()">Nuevo Item</button>
+      <button (click)="logout()" class="btn btn-danger">Cerrar sesión</button>
+    </div>
+  </div>
+  <div class="confirmation-overlay">
+  <nz-alert *ngIf="message" [nzType]="messageType" [nzMessage]="message" class="confirmation-alert"></nz-alert>
+  </div>
+  <nz-table #basicTable [nzData]="items" [nzLoading]="loading"  [nzFrontPagination]="false" nzBordered>
+    <thead>
+      <tr>
+        <th nzWidth="6%">Código</th>
+        <th nzWidth="15%">Nombre</th>
+        <th nzWidth="15%">Descripción</th>
+        <th nzWidth="9%">Referencia interna</th>
+        <th nzWidth="9%">Precio unitario</th>       
+        <th nzWidth="8%">Estado</th>
+        <th nzWidth="8%">Unidad  de medida</th>
+        <th nzWidth="11%">Fecha creación</th>
+        <th nzWidth="20%">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of basicTable.data">
+        <td>{{ item.codigo }}</td>
+        <td>{{ item.nombre }}</td>
+        <td>{{ item.descripcion }}</td>
+        <td>{{ item.refInterna }}</td>
+        <td>{{ item.precioUnitario }}</td>
+        <td>{{ item.estado }}</td>
+        <td>{{ item.unidadMedida  }}</td>
+        <td>{{ item.fechaCreacion | date:'short' }}</td>
+        <td>
+          <button nz-button nzSize="small" nzType="default" (click)="editItem(item)" > <i nz-icon nzType="edit"></i>Editar</button>
+          <button nz-button nzSize="small" nzType="default" nzDanger (click)="confirmDelete(item)"><i nz-icon nzType="delete"></i>Eliminar</button>
+          
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+
+  <!-- Paginación si la necesitas -->
+  <nz-pagination
+    [nzPageIndex]="pageIndex"
+    [nzTotal]="total"
+    [nzPageSize]="pageSize"
+    (nzPageIndexChange)="onPageChange($event)"
+    (nzPageSizeChange)="onPageSizeChange($event)">
+  </nz-pagination>
+</div>
+
+<app-item-modal
+  [visible]="isModalVisible"
+  [isEditMode]="isEditMode"
+  [itemData]="currentItem"
+  (save)="handleSave($event)"
+  (cancel)="handleCancel()">
+</app-item-modal>
