@@ -56,6 +56,5 @@ login(credentials: { username: string, password: string }): Observable<{ token: 
   }, expiration);
 }
 
-  // opcional: decodificar token si necesitas el usuario
-  // getUser(): any { ... }
+
 }

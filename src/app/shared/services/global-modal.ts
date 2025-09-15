@@ -10,13 +10,13 @@ export class GlobalModalService {
     const ref = this.modal.create({
       nzTitle: title ?? undefined,
       nzContent: ModalMessageComponent,
-      // nzData se inyecta como NZ_MODAL_DATA dentro del componente (v16+)
+     
       nzData: { type, title, message },
       nzOkText: 'Aceptar',
-      nzCancelText: null,        // ocultar botón cancelar
+      nzCancelText: null,       
       nzMaskClosable: false,
       nzClosable: true,
-      // por defecto, create devuelve NzModalRef
+      
     });
     return ref;
   }
@@ -50,7 +50,7 @@ export class GlobalModalService {
       nzContent: content,
       nzOnOk: onOk,
       nzOnCancel: onCancel,
-      //nzOkType: okType
+  
     });
   }
 }

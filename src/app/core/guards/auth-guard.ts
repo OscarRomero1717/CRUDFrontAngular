@@ -8,8 +8,7 @@ export const authGuard: CanActivateFn = () => {
   const token = authService.getToken();
   if (token) {
     return true;
-  } else {
-    // redirigir al login
+  } else {    
     return router.createUrlTree(['/login']);
   }
 };

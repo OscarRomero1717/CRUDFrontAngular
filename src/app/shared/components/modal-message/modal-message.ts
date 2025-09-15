@@ -41,7 +41,7 @@ export class ModalMessageComponent {
                                 this.data?.type === 'warning' ? 'Atención' : 'Información');
   }
 
-  // cerrar (si quieres cerrar desde el contenido)
+  
   close(result?: any) {
     this.modalRef.close(result);
   }

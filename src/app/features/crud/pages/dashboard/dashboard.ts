@@ -1,15 +1,13 @@
-
-
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { ItemModalComponent } from '../../components/item-modal/item-modal';
-import { CrudService } from '../../services/crud';  // ajusta la ruta al servicio que uses
+import { CrudService } from '../../services/crud';  
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { AuthService } from 'c:/Users/almen/Or_crud/src/app/features/auth/services/auth';
+import { AuthService } from '../../../auth/services/auth';
 import { Router } from '@angular/router';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
 
@@ -48,6 +46,8 @@ export class DashboardComponent implements OnInit {
   currentItem: any = null;
   private tokenKey = 'jwt_token';
 
+  menuOpen = false;
+
   private crudService = inject(CrudService) ;
   private authService = inject(AuthService);
   private router = inject(Router);
@@ -73,10 +73,10 @@ export class DashboardComponent implements OnInit {
     this.ValidadorJWT()
 
     this.loading = true;
-    // Suponiendo que el servicio tenga un método getItems(page, size)
+    
     this.crudService.getItems(this.pageIndex, this.pageSize).subscribe({
       next: resp => {
-        this.items = resp.items;    // ajusta según estructura del API
+        this.items = resp.items;    
         this.total = resp.total;    // total de items para paginación
         this.loading = false;
            
@@ -182,7 +182,7 @@ export class DashboardComponent implements OnInit {
     this.message = 'Ocurrió un error';
     this.messageType = 'error';
     setTimeout(() => {
-    this.message = null; // oculta el alert después de 4 segundos
+    this.message = null; 
   }, 2500);
   }
 
@@ -190,7 +190,7 @@ export class DashboardComponent implements OnInit {
     this.message = 'Acción realizada con éxito';
      this.messageType = 'success';
      setTimeout(() => {
-    this.message = null; // oculta el alert después de 4 segundos
+    this.message = null; 
   }, 2500);
   }
 }

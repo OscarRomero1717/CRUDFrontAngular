@@ -16,7 +16,7 @@ export interface ApiResponse<T> {
 })
 export class CrudService {
   private http = inject(HttpClient);
-  private apiUrl = 'https://localhost:7285/'; // Asegúrate de tener configurada tu URL base
+  private apiUrl = 'https://localhost:7285/'; 
 
   // Headers comunes
   private headers = new HttpHeaders({
@@ -30,15 +30,11 @@ export class CrudService {
    * @param filters Filtros opcionales
    */
   getItems(page: number = 1, pageSize: number = 10, ): Observable<ApiResponse<any>> {
-    // let params = new HttpParams()
-    //   .set('page', page.toString())
-    //   .set('pageSize', pageSize.toString());
-
-    // Agregar filtros si existen
+  
     
 
     return this.http.get<ApiResponse<any>>(`${this.apiUrl}productos?page=${page}&take=${pageSize}`, { 
-      //params, 
+     
       headers: this.headers 
     });
   }
@@ -84,21 +80,5 @@ export class CrudService {
     });
   }
 
-  /**
-   * Buscar items por término de búsqueda
-   * @param searchTerm Término de búsqueda
-   * @param page Número de página
-   * @param pageSize Tamaño de página
-   */
-  searchItems(searchTerm: string, page: number = 1, pageSize: number = 10): Observable<ApiResponse<any>> {
-    const params = new HttpParams()
-      .set('search', searchTerm)
-      .set('page', page.toString())
-      .set('pageSize', pageSize.toString());
-
-    return this.http.get<ApiResponse<any>>(`${this.apiUrl}/items/search`, { 
-      params, 
-      headers: this.headers 
-    });
-  }
+  
 }

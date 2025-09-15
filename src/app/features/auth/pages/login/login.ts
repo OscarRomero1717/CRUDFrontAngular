@@ -11,7 +11,8 @@ import { NzAlertModule } from 'ng-zorro-antd/alert';
 
 import { AuthService } from '../../services/auth';
 
-import { GlobalModalService } from 'c:/Users/almen/Or_crud/src/app/shared/services/global-modal';
+
+import { GlobalModalService } from '@shared/services/global-modal';
 import { Router } from '@angular/router';
 
 @Component({
@@ -57,14 +58,12 @@ export class LoginComponent {
     this.authService.login({ username: creds.email, password: creds.password })
       .subscribe({
         next: (resp) => {
-          // suponiendo resp contiene token
-          // navegamos al dashboard, o ruta segura
+         
           this.router.navigate(['/dashboard']);
         },
         error: (err) => {
           console.error('Login error', err);
-          // mostramos mensaje de error
-          // puedes personalizar según status code
+          // mostramos mensaje de error          
           if (err.status === 401) {
             this.loginError = 'Credenciales inválidas';
             //this.modal.error('Credenciales inválidas')

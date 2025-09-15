@@ -1,26 +1,51 @@
-<div class="table-container" style="padding: 24px;">
-  
-  <div style="margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
-    <h2>Listado de Items</h2>
-    <!-- Contenedor de botones alineados a la izquierda del bloque derecho -->
-    <div style="display: flex; gap: 8px;">
-      <button nz-button nzType="primary" (click)="openModal()">Nuevo Item</button>
-      <button (click)="logout()" class="btn btn-danger">Cerrar sesión</button>
-    </div>
+<nav class="navbar">
+  <div class="navbar-brand">
+    <img
+      src="/imgLogo.png"
+      alt="Logo"
+      style="height: 40px; vertical-align: middle; margin-right: 12px"
+    />
+
+    Gestión de productos QUALA
+  </div>
+  <button class="navbar-toggle" (click)="menuOpen = !menuOpen">
+    <i nz-icon nzType="menu" style="font-size: 24px"></i>
+  </button>
+  <ul class="navbar-menu" [class.open]="menuOpen">
+    <li><a (click)="openModal()">Nuevo producto</a></li>
+    <li><a (click)="logout()">Cerrar sesión</a></li>
+  </ul>
+</nav>
+<div class="table-container" style="padding: 24px">
+  <div
+    style="margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center"
+  >
+    <h2>Listado de productos</h2>
   </div>
   <div class="confirmation-overlay">
-  <nz-alert *ngIf="message" [nzType]="messageType" [nzMessage]="message" class="confirmation-alert"></nz-alert>
+    <nz-alert
+      *ngIf="message"
+      [nzType]="messageType"
+      [nzMessage]="message"
+      class="confirmation-alert"
+    ></nz-alert>
   </div>
-  <nz-table #basicTable [nzData]="items" [nzLoading]="loading"  [nzFrontPagination]="false" nzBordered>
+  <nz-table
+    #basicTable
+    [nzData]="items"
+    [nzLoading]="loading"
+    [nzFrontPagination]="false"
+    nzBordered
+  >
     <thead>
       <tr>
         <th nzWidth="6%">Código</th>
         <th nzWidth="15%">Nombre</th>
         <th nzWidth="15%">Descripción</th>
         <th nzWidth="9%">Referencia interna</th>
-        <th nzWidth="9%">Precio unitario</th>       
+        <th nzWidth="9%">Precio unitario</th>
         <th nzWidth="8%">Estado</th>
-        <th nzWidth="8%">Unidad  de medida</th>
+        <th nzWidth="8%">Unidad de medida</th>
         <th nzWidth="11%">Fecha creación</th>
         <th nzWidth="20%">Acciones</th>
       </tr>
@@ -33,24 +58,28 @@
         <td>{{ item.refInterna }}</td>
         <td>{{ item.precioUnitario }}</td>
         <td>{{ item.estado }}</td>
-        <td>{{ item.unidadMedida  }}</td>
-        <td>{{ item.fechaCreacion | date:'short' }}</td>
+        <td>{{ item.unidadMedida }}</td>
+        <td>{{ item.fechaCreacion | date : 'short' }}</td>
         <td>
-          <button nz-button nzSize="small" nzType="default" (click)="editItem(item)" > <i nz-icon nzType="edit"></i>Editar</button>
-          <button nz-button nzSize="small" nzType="default" nzDanger (click)="confirmDelete(item)"><i nz-icon nzType="delete"></i>Eliminar</button>
-          
+          <button nz-button nzSize="small" nzType="default" (click)="editItem(item)">
+            <i nz-icon nzType="edit"></i>Editar
+          </button>
+          <button nz-button nzSize="small" nzType="default" nzDanger (click)="confirmDelete(item)">
+            <i nz-icon nzType="delete"></i>Eliminar
+          </button>
         </td>
       </tr>
     </tbody>
   </nz-table>
 
-  <!-- Paginación si la necesitas -->
+  <!-- Paginación -->
   <nz-pagination
     [nzPageIndex]="pageIndex"
     [nzTotal]="total"
     [nzPageSize]="pageSize"
     (nzPageIndexChange)="onPageChange($event)"
-    (nzPageSizeChange)="onPageSizeChange($event)">
+    (nzPageSizeChange)="onPageSizeChange($event)"
+  >
   </nz-pagination>
 </div>
 
@@ -59,5 +88,6 @@
   [isEditMode]="isEditMode"
   [itemData]="currentItem"
   (save)="handleSave($event)"
-  (cancel)="handleCancel()">
+  (cancel)="handleCancel()"
+>
 </app-item-modal>
