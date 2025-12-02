@@ -1,86 +1,113 @@
 <nav class="navbar">
   <div class="navbar-brand">
-    <img
-      src="/logo.png"
-      
-      style="height: 40px; vertical-align: middle; margin-right: 12px"
-    />
-
-    Gestión de productos QUALA
+    Gestión de Hoteles
   </div>
-  <button class="navbar-toggle" (click)="menuOpen = !menuOpen">
+
+  <!-- Botón hamburguesa -->
+  <button class="navbar-toggle" type="button" (click)="menuOpen = !menuOpen">
     <i nz-icon nzType="menu" style="font-size: 24px"></i>
   </button>
-  <ul class="navbar-menu" [class.open]="menuOpen">
-    <li><a (click)="openModal()">Nuevo producto</a></li>
-    <li><a (click)="logout()">Cerrar sesión</a></li>
-  </ul>
+
+  <!-- <ul class="navbar-menu" [class.open]="menuOpen">
+    <li class="navbar-item">
+      <a (click)="openModal()">Nuevo Hotel</a>
+    </li>
+  </ul> -->
 </nav>
-<div class="table-container" style="padding: 24px">
-  <div
-    style="margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center"
-  >
-    <h2>Listado de productos</h2>
+
+<div class="table-container">
+ 
+<div class="table-header">
+  <h2 class="table-title">Listado de Hoteles</h2>
+
+  <div class="table-actions">
+    <!-- Buscador -->
+    <div class="search-wrapper">
+      <nz-input-group nzPrefixIcon="search">
+        <input
+          nz-input
+          [(ngModel)]="searchTerm"
+          placeholder="Buscar"
+        />
+      </nz-input-group>
+    </div>
+
+    <!-- Botón agregar -->
+    <button
+      nz-button
+      nzType="primary"
+      class="add-button"
+      (click)="openModal()"
+    >
+      <i nz-icon nzType="plus"></i>
+      <span>Nuevo Hotel</span>
+    </button>
   </div>
-  <div class="confirmation-overlay">
-    <nz-alert
-      *ngIf="message"
-      [nzType]="messageType"
-      [nzMessage]="message"
-      class="confirmation-alert"
-    ></nz-alert>
-  </div>
-  <nz-table
-    #basicTable
-    [nzData]="items"
-    [nzLoading]="loading"
-    [nzFrontPagination]="false"
-    nzBordered
-  >
-    <thead>
-      <tr>
-        <th nzWidth="6%">Código</th>
-        <th nzWidth="15%">Nombre</th>
-        <th nzWidth="15%">Descripción</th>
-        <th nzWidth="9%">Referencia interna</th>
-        <th nzWidth="9%">Precio unitario</th>
-        <th nzWidth="8%">Estado</th>
-        <th nzWidth="8%">Unidad de medida</th>
-        <th nzWidth="11%">Fecha creación</th>
-        <th nzWidth="20%">Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of basicTable.data">
-        <td>{{ item.codigo }}</td>
-        <td>{{ item.nombre }}</td>
-        <td>{{ item.descripcion }}</td>
-        <td>{{ item.refInterna }}</td>
-        <td>{{ item.precioUnitario }}</td>
-        <td>{{ item.estado }}</td>
-        <td>{{ item.unidadMedida }}</td>
-        <td>{{ item.fechaCreacion | date : 'short' }}</td>
-        <td>
-          <button nz-button nzSize="small" nzType="default" (click)="editItem(item)">
-            <i nz-icon nzType="edit"></i>Editar
-          </button>
-          <button nz-button nzSize="small" nzType="default" nzDanger (click)="confirmDelete(item)">
-            <i nz-icon nzType="delete"></i>Eliminar
-          </button>
+</div>
+
+
+
+  <!-- WRAPPER PARA SCROLL HORIZONTAL EN MOVIL -->
+  <div class="table-wrapper">
+    
+
+      <nz-table
+        #basicTable
+        [nzData]="filteredItems"
+        [nzLoading]="loading"
+        [nzFrontPagination]="false"
+        nzBordered
+      >
+
+
+      <thead>
+        <tr>
+          <th nzWidth="15%">Nombre</th>
+          <th nzWidth="27%">Descripción</th>
+          <th nzWidth="12%">Sede</th>
+          <th nzWidth="16%">Dirección</th>
+          <th nzWidth="30%">Foto</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of basicTable.data">         
+          <td>{{ item.nombre }}</td>
+          <td>{{ item.descripcion }}</td>
+          <td>{{ item.sede }}</td>
+          <td>{{ item.direccion }}</td>
+          <td>
+          <img
+  *ngIf="item.foto"
+  [src]="item.foto | hexToUrl:'image/jpeg'"
+  style="width: 120px; height: 120px; object-fit: cover; border-radius: 8px;"
+/>
         </td>
-      </tr>
-    </tbody>
-  </nz-table>
+       
+          <td>
+            <button nz-button nzSize="small" nzType="default" (click)="editItem(item)">
+              <i nz-icon nzType="edit"></i>Editar
+            </button>
+            <button nz-button nzSize="small" nzType="default" nzDanger (click)="confirmDelete(item)">
+              <i nz-icon nzType="delete"></i>Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
 
   <!-- Paginación -->
-  <nz-pagination
-    [nzPageIndex]="pageIndex"
-    [nzTotal]="total"
-    [nzPageSize]="pageSize"
-    (nzPageIndexChange)="onPageChange($event)"
-    (nzPageSizeChange)="onPageSizeChange($event)"
-  >
-  </nz-pagination>
+  <div class="pagination-wrapper">
+    <nz-pagination
+      [nzPageIndex]="pageIndex"
+      [nzTotal]="total"
+      [nzPageSize]="pageSize"
+      (nzPageIndexChange)="onPageChange($event)"
+      (nzPageSizeChange)="onPageSizeChange($event)"
+    >
+    </nz-pagination>
+  </div>
 </div>
 
 <app-item-modal

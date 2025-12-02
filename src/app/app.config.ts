@@ -4,7 +4,7 @@ import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } fr
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { jwtInterceptor } from './core/interceptors/jwt-interceptor';
+//import { jwtInterceptor } from './core/interceptors/jwt-interceptor';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -15,7 +15,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideHttpClient(
-      withInterceptors([ jwtInterceptor ])
+      //withInterceptors([ jwtInterceptor ])
     ),importProvidersFrom(
       NzModalModule,
       NzButtonModule,

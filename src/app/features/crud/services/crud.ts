@@ -33,49 +33,42 @@ export class CrudService {
   
     
 
-    return this.http.get<ApiResponse<any>>(`${this.apiUrl}productos?page=${page}&take=${pageSize}`, { 
+    return this.http.get<ApiResponse<any>>(`${this.apiUrl}hoteles?page=${page}&take=${pageSize}`, { 
      
       headers: this.headers 
     });
   }
 
-  /**
-   * Obtener un item por ID
-   * @param id ID del item
-   */
-  getItemById(id: string | number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/items/${id}`, { 
-      headers: this.headers 
-    });
-  }
+  
 
   /**
    * Crear un nuevo item
    * @param item Datos del item a crear
    */
-  createItem(item: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}productos`, item, { 
-      headers: this.headers 
-    });
-  }
+  createItem(formData: FormData): Observable<any> { 
+  return this.http.post<any>(`${this.apiUrl}hoteles`, formData);
+}
 
   /**
    * Actualizar un item existente
    * @param id ID del item a actualizar
    * @param item Datos actualizados
    */
-  updateItem(id: string | number, item: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}productos/${id}`, item, { 
+  updateItem2(id: string | number, item: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}hoteles/${id}`, item, { 
       headers: this.headers 
     });
   }
 
+  updateItem(id: string | number, formData: FormData): Observable<any> {
+  return this.http.put<any>(`${this.apiUrl}hoteles/${id}`, formData);
+}
   /**
    * Eliminar un item
    * @param id ID del item a eliminar
    */
   deleteItem(id: string | number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}productos/${id}`, { 
+    return this.http.delete<any>(`${this.apiUrl}hoteles/${id}`, { 
       headers: this.headers 
     });
   }

@@ -1,76 +1,4 @@
-// .confirmation-alert {
-//   max-width: 300px;       // tamaño más pequeño
-//   margin: 0 auto 16px;    // centrado horizontal y margen abajo
-//   font-size: 14px;        // letra más pequeña
-//   text-align: center;
-//   padding: 8px 16px;
-// }
-
-
-.confirmation-alert {
-  position: fixed;           /* fuera del flujo, siempre visible */
-  top: 50%;                  /* centrado vertical */
-  left: 50%;                 /* centrado horizontal */
-  transform: translate(-50%, -50%);
-  max-width: 300px;
-  width: 80%;                /* ancho adaptable */
-  font-size: 14px;
-  text-align: center;
-  padding: 16px 24px;        /* un poco más de padding para el modal */
-  background: #fff;          /* fondo blanco */
-  border-radius: 10px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  z-index: 10000;            /* por encima de todo */
-  animation: fadeIn 0.5s;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px);}
-  to { opacity: 1; transform: translateY(0);}
-}
-
-/* Opcional: overlay difuminado detrás */
-// .confirmation-overlay {
-//   position: fixed;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-//   background: rgba(0,0,0,0.5);
-//   backdrop-filter: blur(6px);
-//   z-index: 9999;
-// }
-
-.table-container {
-  background: #f8fafc;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-  padding: 32px;
-}
-
-nz-table {
-  th, td {
-    text-align: center;
-    vertical-align: middle;
-  }
-  th {
-    background: #e3e8ee;
-    font-weight: 600;
-    color: #333;
-  }
-  td {
-    background: #fff;
-  }
-}
-
-button[nz-button] {
-  border-radius: 6px;
-  transition: box-shadow 0.2s;
-  &:hover, &:focus {
-    box-shadow: 0 0 0 2px #1677ff33;
-  }
-}
-
+/* ---------- NAVBAR ---------- */
 .navbar {
   display: flex;
   align-items: center;
@@ -81,6 +9,8 @@ button[nz-button] {
   height: 56px;
   border-radius: 12px 12px 0 0;
   margin-bottom: 16px;
+  position: relative;
+  z-index: 10;
 
   .navbar-brand {
     font-size: 20px;
@@ -93,7 +23,7 @@ button[nz-button] {
     border: none;
     color: #fff;
     cursor: pointer;
-    display: none;
+    display: none; /* oculto en escritorio */
     align-items: center;
   }
 
@@ -109,6 +39,7 @@ button[nz-button] {
       text-decoration: none;
       font-weight: 500;
       transition: color 0.2s;
+
       &:hover {
         color: #ffd700;
       }
@@ -116,7 +47,16 @@ button[nz-button] {
   }
 }
 
+/* --- NAVBAR vista móvil / tablet --- */
 @media (max-width: 768px) {
+  .navbar {
+    border-radius: 0; /* en móvil suele ir a todo el ancho */
+  }
+
+  .navbar-toggle {
+    display: flex; /* mostrar hamburguesa */
+  }
+
   .navbar-menu {
     position: absolute;
     top: 56px;
@@ -125,16 +65,192 @@ button[nz-button] {
     background: #1677ff;
     flex-direction: column;
     gap: 0;
-    display: none;
+    display: none; /* oculta por defecto */
+
     li {
       padding: 12px 24px;
       border-bottom: 1px solid #1456b3;
     }
+
     &.open {
-      display: flex;
+      display: flex; /* se muestra cuando menuOpen = true */
     }
   }
-  .navbar-toggle {
+}
+
+/* ---------- ALERTA ---------- */
+.confirmation-alert {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 300px;
+  width: 80%;
+  font-size: 14px;
+  text-align: center;
+  padding: 16px 24px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  z-index: 10000;
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* ---------- CONTENEDOR TABLA ---------- */
+.table-container {
+  background: #f8fafc;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  padding: 32px;
+}
+
+/* cabecera de la tabla (titulo + buscador + botón) */
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 12px;
+
+  .table-title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .table-actions {
     display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .search-wrapper {
+    flex: 1 1 260px;
+    max-width: 420px;
+  }
+
+  .add-button {
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+}
+
+/* Wrapper para hacer la tabla scrolleable en móvil */
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto; /* clave para responsive con muchas columnas */
+}
+
+/* Estilos de la tabla */
+nz-table {
+  th,
+  td {
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap; /* evita que el texto rompa demasiado */
+  }
+
+  th {
+    background: #e3e8ee;
+    font-weight: 600;
+    color: #333;
+  }
+
+  td {
+    background: #fff;
+  }
+
+  /* anchura mínima para evitar que se aplaste demasiado */
+  table {
+    min-width: 900px; /* ajusta según veas */
+  }
+}
+
+/* botones dentro de la tabla */
+button[nz-button] {
+  border-radius: 6px;
+  transition: box-shadow 0.2s;
+
+  &:hover,
+  &:focus {
+    box-shadow: 0 0 0 2px #1677ff33;
+  }
+}
+
+/* paginación centrada y con margen */
+.pagination-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+/* ---------- RESPONSIVE GENERAL ---------- */
+@media (max-width: 1024px) {
+  .table-container {
+    padding: 24px;
+  }
+
+  .table-header {
+    flex-direction: column;
+    align-items: stretch;
+
+    .table-actions {
+      width: 100%;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    .search-wrapper {
+      flex: 1 1 100%;
+      max-width: 100%;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .table-container {
+    padding: 16px;
+    border-radius: 0; /* pantalla completa en móvil */
+  }
+
+  .table-header {
+    .table-title {
+      font-size: 1.1rem;
+    }
+
+    .table-actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .add-button {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  /* reducir tamaño de los botones en filas */
+  button[nz-button] {
+    padding: 0 8px;
+    font-size: 12px;
+  }
+
+  .confirmation-alert {
+    width: 90%;
+    max-width: 320px;
   }
 }
